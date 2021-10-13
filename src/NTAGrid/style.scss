@@ -1,0 +1,56 @@
+.nta-data-grid {
+    position: relative;
+    .loading-container {
+        top: 0px;
+        width: 100%;
+        background: #ffffffcc;
+        left: 0;
+        height: 100%;
+        z-index: 10;
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        position: absolute;
+    }
+    .rdg {
+        transition: all 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
+        color-scheme: light;
+        --header-background-color: white;
+        font-family: 'Noto Sans JP', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans',
+            sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+        .rdg-header-row {
+            transition: all 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
+
+            color: rgba(0, 0, 0, 0.87);
+            font-weight: 500;
+            background-color: white;
+            .rdg-cell {
+                border-bottom: 1px solid #cccccc80;
+            }
+        }
+        .rdg-row {
+            transition: all 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
+            background-color: white;
+            color: #333;
+            &.rdg-row-even {
+                background-color: #f8f8f8;
+            }
+            &:hover {
+                background-color: #d6d3ca;
+            }
+            &[aria-selected='true'] {
+                background-color: #f2ebd4;
+            }
+            .rdg-cell {
+                border-bottom: 1px solid #cccccc80;
+                border-right: none;
+            }
+        }
+    }
+    .data-grid-pagination {
+        display: flex;
+        margin: 10px 0;
+        padding: 10px;
+    }
+}
