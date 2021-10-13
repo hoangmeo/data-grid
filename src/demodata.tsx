@@ -111,7 +111,7 @@ const createFakeData = () => {
     const now = Date.now();
 
     const rows: CompanyType[] = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 1000; i++) {
         rows.push({
             id: i,
             title: `Task #${i + 1}`,

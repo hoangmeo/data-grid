@@ -56,6 +56,7 @@ export default function DemoTable(): ReactElement {
                         <input />
                     </div>
                 ),
+                client: <input onChange={onTextChange} />,
             }}
         />
     );

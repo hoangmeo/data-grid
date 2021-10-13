@@ -22,10 +22,11 @@ export interface IProps<R, SR, K extends string | number> extends DataGridProps<
     onPageSizeChange?: (pageSize: number) => void;
     onPageIndexChange?: (page: number) => void;
     headerFilter?: HeaderFilter;
+    columnsKeyConfig?: string;
 }
 
 function NTAGrid<R, SR = unknown, K extends string | number = number>(props: IProps<R, SR, K> & { tableRef?: React.Ref<INTAGridRef> }) {
-    const { columns: _columns, headerFilter, loading, rowKey, pagination, onPageIndexChange, onPageSizeChange, ...otherProps } = props;
+    const { columns: _columns, columnsKeyConfig, headerFilter, loading, rowKey, pagination, onPageIndexChange, onPageSizeChange, ...otherProps } = props;
 
     // state
 
@@ -80,8 +81,8 @@ function NTAGrid<R, SR = unknown, K extends string | number = number>(props: IPr
                 </div>
             )}
             <DndProvider backend={HTML5Backend}>
-                <ColumnsSetting columns={_columns} onColumnsDisplayChange={onColumnsDisplayChange} />
-                <DataGrid<R, SR, K> rowKeyGetter={rowKeyGetter} className="rdg-light " columns={draggableColumns} {...otherProps} />
+                <ColumnsSetting columns={_columns} onColumnsDisplayChange={onColumnsDisplayChange} columnsKeyConfig={columnsKeyConfig} />
+                <DataGrid<R, SR, K> rowKeyGetter={rowKeyGetter} className="rdg-light" columns={draggableColumns} {...otherProps} />
                 {pagination && (
                     <div className="data-grid-pagination">
                         <NTAPagination {...pagination} onPageIndexChange={onPageIndexChange} onPageSizeChange={onPageSizeChange} />
