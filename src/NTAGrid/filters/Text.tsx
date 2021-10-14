@@ -22,6 +22,7 @@ export default function TextFilter({ filterValue = defaultValue, onChange }: Pro
                 <option value={FilterCondition.Equal}>Equal</option>
             </select>
             <input
+                autoFocus
                 value={filterValue?.value || ''}
                 onChange={(event) => {
                     onChange({ ...filterValue, value: event.currentTarget.value });

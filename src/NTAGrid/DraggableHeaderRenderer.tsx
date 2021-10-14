@@ -109,23 +109,28 @@ export function DraggableHeaderRenderer<R>({
 
     return (
         <div {...props}>
-            <div style={{ flex: 1 }}>{headerName}</div>{' '}
+            <div style={{ flex: 1 }}>{headerName}</div>
             {filter && (
                 <Popover
                     containerClassName="nta-grid-header-filter"
                     align="center"
-                    positions={['bottom']} // preferred positions by priority
+                    positions={['bottom']}
                     onClickOutside={(e) => {
                         setOpen(false);
                     }}
                     isOpen={isOpen}
                     content={
-                        <div style={{ padding: 10, backgroundColor: 'white', border: '1px solid #cccccc80' }}>
+                        <div
+                            onPointerDown={(e) => {
+                                e.stopPropagation();
+                            }}
+                            style={{ padding: 10, backgroundColor: 'white', border: '1px solid #cccccc80' }}
+                        >
                             <ColumsFilter filter={filter} filterValue={filterValue} onFilterChange={onFilterChange} isOpen={isOpen} filterKey={column.key} />
                         </div>
                     }
                 >
-                    <div className="filter" onClick={handleClick} style={{ cursor: 'pointer' }}>
+                    <div className="filter" onPointerDown={handleClick} style={{ cursor: 'pointer', width: 20, display: 'flex', alignItems: 'center' }}>
                         <FilterIconSVG width={15} style={{ fill: filterValue ? 'red' : '#333' }} />
                     </div>
                 </Popover>

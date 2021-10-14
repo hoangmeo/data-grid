@@ -26,6 +26,7 @@ export const columns: Column<CompanyType>[] = [
         width: 60,
         frozen: true,
         sortable: true,
+        resizable: true,
         formatter: (x) => {
             return <div style={{ color: 'red' }}>{x.row.id}</div>;
         },
@@ -39,6 +40,7 @@ export const columns: Column<CompanyType>[] = [
         width: 120,
         frozen: true,
         sortable: true,
+        resizable: true,
     },
     {
         key: 'client',
@@ -50,6 +52,7 @@ export const columns: Column<CompanyType>[] = [
         key: 'area',
         name: 'Area',
         width: 120,
+        resizable: true,
     },
     {
         key: 'country',
