@@ -2,13 +2,10 @@ import { HeaderRendererProps, SortableHeaderCell } from 'react-data-grid';
 import { useDrag, useDrop } from 'react-dnd';
 import { useCombinedRefs } from './useCombinedRefs';
 import { ReactComponent as FilterIconSVG } from './icons/FilterIcon.svg';
-import React, { useState } from 'react';
-import { ArrowContainer, Popover } from 'react-tiny-popover';
-import { Box } from '@material-ui/core';
+import React from 'react';
+import { Popover } from 'react-tiny-popover';
 import { FilterItemValue, HeaderFilter, HeaderFilterElm } from './type';
 import ColumsFilter from './filters';
-import { usePopper } from 'react-popper';
-import { useLayer, Arrow } from 'react-laag';
 
 interface DraggableHeaderRendererProps<R> extends HeaderRendererProps<R> {
     onColumnsReorder: (sourceKey: string, targetKey: string) => void;
@@ -31,7 +28,6 @@ export function DraggableHeaderRenderer<R>({
     onFilterChange,
 }: DraggableHeaderRendererProps<R>) {
     const [isOpen, setOpen] = React.useState<boolean>(false);
-    const filterPopoverRef = React.useRef(null);
     // poper
 
     //
@@ -78,8 +74,6 @@ export function DraggableHeaderRenderer<R>({
     }, [enableDrag, combinedRefs, isDragging, isOver]);
 
     const handleClick = (e: any) => {
-        e.stopPropagation();
-        e.preventDefault();
         setOpen(true);
     };
     const headerName = React.useMemo(() => {
