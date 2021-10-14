@@ -1,6 +1,6 @@
 import { Column, SelectColumn } from 'react-data-grid';
 import faker from 'faker';
-
+import moment from 'moment';
 export interface CompanyType {
     id: number;
     title: string;
@@ -26,7 +26,6 @@ export const columns: Column<CompanyType>[] = [
         width: 60,
         frozen: true,
         sortable: true,
-        resizable: true,
         formatter: (x) => {
             return <div style={{ color: 'red' }}>{x.row.id}</div>;
         },
@@ -46,7 +45,6 @@ export const columns: Column<CompanyType>[] = [
         name: 'Client',
         width: 220,
         sortable: true,
-        resizable: true,
     },
     {
         key: 'area',
@@ -76,12 +74,18 @@ export const columns: Column<CompanyType>[] = [
     {
         key: 'startTimestamp',
         name: 'Start date',
-        width: 100,
+        width: 200,
+        formatter: (v) => {
+            return <span>{moment(v.row.startTimestamp).format('DD/MM/YYYY HH:mm')}</span>;
+        },
     },
     {
         key: 'endTimestamp',
         name: 'Deadline',
-        width: 100,
+        width: 200,
+        formatter: (v) => {
+            return <span>{moment(v.row.endTimestamp).format('DD/MM/YYYY HH:mm')}</span>;
+        },
     },
     {
         key: 'budget',
@@ -91,6 +95,7 @@ export const columns: Column<CompanyType>[] = [
     {
         key: 'transaction',
         name: 'Transaction type',
+        width: 150,
     },
     {
         key: 'account',

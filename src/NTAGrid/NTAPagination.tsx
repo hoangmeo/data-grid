@@ -53,7 +53,7 @@ interface Props {
     onPageSizeChange?: (pageSize: number) => void;
     onPageIndexChange?: (page: number) => void;
 }
-const rowsPerPageOptions = [10, 20, 30, 40, 50, 100, 200, 500];
+const rowsPerPageOptions = [10, 20, 30, 40, 50, 100, 200, 500, 1000];
 
 const CustomPagination = ({ rowCount, page, pageSize, onPageIndexChange, onPageSizeChange }: Props): JSX.Element => {
     // Get Loading status

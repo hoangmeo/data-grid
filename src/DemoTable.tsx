@@ -2,6 +2,7 @@ import React, { ReactElement, useState } from 'react';
 import { SortColumn } from 'react-data-grid';
 import { CompanyType, columns, fakeData } from './demodata';
 import NTAGrid from './NTAGrid/NTAGrid';
+import { HeaderFilterType } from './NTAGrid/type';
 export default function DemoTable(): ReactElement {
     const [selectedRows, setSelectedRows] = useState<Set<number>>(() => new Set());
     const [pageIndex, setPageIndex] = React.useState<number>(1);
@@ -24,9 +25,7 @@ export default function DemoTable(): ReactElement {
         getData();
         console.log(sortColumns);
     }, [sortColumns, pageIndex, pageSize]);
-    const onTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(event.target.value);
-    };
+
     return (
         <NTAGrid<CompanyType, unknown, number>
             loading={loading}
@@ -46,17 +45,26 @@ export default function DemoTable(): ReactElement {
                 setSelectedRows(t);
             }}
             headerFilter={{
-                id: <input onChange={onTextChange} />,
-                title: (
-                    <div>
-                        <select>
-                            <option>Start With</option>
-                            <option>End With</option>
-                        </select>
-                        <input />
-                    </div>
-                ),
-                client: <input onChange={onTextChange} />,
+                id: { type: HeaderFilterType.NUMBER },
+                title: { type: HeaderFilterType.TEXT },
+                startTimestamp: { type: HeaderFilterType.DATETIME },
+                transaction: {
+                    type: HeaderFilterType.LIST,
+                    list: [
+                        {
+                            label: 'Deposit',
+                            value: 'deposit',
+                        },
+                        {
+                            label: 'Payment',
+                            value: 'payment',
+                        },
+                        {
+                            label: 'Withdrawal',
+                            value: 'withdrawal',
+                        },
+                    ],
+                },
             }}
         />
     );

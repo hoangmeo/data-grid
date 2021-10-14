@@ -2,14 +2,20 @@ import { HeaderRendererProps, SortableHeaderCell } from 'react-data-grid';
 import { useDrag, useDrop } from 'react-dnd';
 import { useCombinedRefs } from './useCombinedRefs';
 import { ReactComponent as FilterIconSVG } from './icons/FilterIcon.svg';
-import React from 'react';
-import { Popover } from 'react-tiny-popover';
+import React, { useState } from 'react';
+import { ArrowContainer, Popover } from 'react-tiny-popover';
 import { Box } from '@material-ui/core';
+import { FilterItemValue, HeaderFilter, HeaderFilterElm } from './type';
+import ColumsFilter from './filters';
+import { usePopper } from 'react-popper';
+import { useLayer, Arrow } from 'react-laag';
 
 interface DraggableHeaderRendererProps<R> extends HeaderRendererProps<R> {
     onColumnsReorder: (sourceKey: string, targetKey: string) => void;
-    headerFilter?: HeaderFilter;
+    headerFilter?: HeaderFilter<R>;
     enableDrag: boolean;
+    headerFilterData: { [key: string]: any };
+    onFilterChange: (key: string, value: FilterItemValue | undefined) => void;
 }
 
 export function DraggableHeaderRenderer<R>({
@@ -21,9 +27,14 @@ export function DraggableHeaderRenderer<R>({
     isCellSelected,
     headerFilter,
     enableDrag,
+    headerFilterData,
+    onFilterChange,
 }: DraggableHeaderRendererProps<R>) {
     const [isOpen, setOpen] = React.useState<boolean>(false);
+    const filterPopoverRef = React.useRef(null);
+    // poper
 
+    //
     const [{ isDragging }, drag] = useDrag({
         type: 'COLUMN_DRAG',
         item: { key: column.key },
@@ -66,7 +77,9 @@ export function DraggableHeaderRenderer<R>({
         };
     }, [enableDrag, combinedRefs, isDragging, isOver]);
 
-    const handleClick = () => {
+    const handleClick = (e: any) => {
+        e.stopPropagation();
+        e.preventDefault();
         setOpen(true);
     };
     const headerName = React.useMemo(() => {
@@ -80,26 +93,43 @@ export function DraggableHeaderRenderer<R>({
         return <div>{column.name}</div>;
     }, [column, sortDirection, onSort, priority, isCellSelected]);
 
+    const filter: HeaderFilterElm<R> | undefined = React.useMemo(() => {
+        if (headerFilter) {
+            return headerFilter[column.key];
+        }
+        return undefined;
+    }, [column, headerFilter]);
+
+    const filterValue = React.useMemo(() => {
+        if (headerFilterData) {
+            return headerFilterData[column.key];
+        }
+        return undefined;
+    }, [column, headerFilterData]);
+
     return (
         <div {...props}>
-            <div style={{ flex: 1 }}>{headerName}</div>
-            {headerFilter && headerFilter[column.key] && (
+            <div style={{ flex: 1 }}>{headerName}</div>{' '}
+            {filter && (
                 <Popover
-                    align="end"
-                    positions={['bottom']}
-                    onClickOutside={() => setOpen(false)}
+                    containerClassName="nta-grid-header-filter"
+                    align="center"
+                    positions={['bottom']} // preferred positions by priority
+                    onClickOutside={(e) => {
+                        setOpen(false);
+                    }}
                     isOpen={isOpen}
-                    content={<Box style={{ padding: 10, backgroundColor: 'white', border: '1px solid #cccccc80' }}>{headerFilter[column.key]}</Box>}
+                    content={
+                        <div style={{ padding: 10, backgroundColor: 'white', border: '1px solid #cccccc80' }}>
+                            <ColumsFilter filter={filter} filterValue={filterValue} onFilterChange={onFilterChange} isOpen={isOpen} filterKey={column.key} />
+                        </div>
+                    }
                 >
                     <div className="filter" onClick={handleClick} style={{ cursor: 'pointer' }}>
-                        <FilterIconSVG width={15} />
+                        <FilterIconSVG width={15} style={{ fill: filterValue ? 'red' : '#333' }} />
                     </div>
                 </Popover>
             )}
         </div>
     );
-}
-
-export interface HeaderFilter {
-    [key: string]: JSX.Element;
 }
