@@ -113,7 +113,7 @@ export default function ColumnsSetting({ originColumns, columns, onColumnsDispla
                         Pin column
                     </Typography>
 
-                    {originColumns
+                    {columns
                         ?.filter((x) => x.name)
                         .map((col) => {
                             return (
