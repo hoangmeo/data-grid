@@ -124,7 +124,7 @@ export function DraggableHeaderRenderer<R>({
                         </div>
                     }
                 >
-                    <div className="filter" onPointerDown={handleClick} style={{ cursor: 'pointer', width: 20, display: 'flex', alignItems: 'center' }}>
+                    <div className="filter" onPointerDown={handleClick} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
                         <FilterIconSVG width={15} style={{ fill: filterValue ? 'red' : '#333' }} />
                     </div>
                 </Popover>

@@ -74,7 +74,7 @@ function NTAGrid<R, SR = unknown, K extends string | number = number>(props: IPr
             if (!c.name) {
                 return c;
             }
-            if (c.key === rowKey || c.frozen) return { ...c, headerRenderer: NoDraggableHeaderRenderer };
+            if (c.key === rowKey) return { ...c, headerRenderer: NoDraggableHeaderRenderer };
             return { ...c, headerRenderer: HeaderRenderer };
         });
     }, [columns, rowKey, headerFilter, headerFilterData]);
@@ -150,7 +150,9 @@ function NTAGrid<R, SR = unknown, K extends string | number = number>(props: IPr
     const onColumnsDisplayChange = (hiddenCols: string[]) => {
         setColumns(_columns.filter((col) => !hiddenCols.includes(col.key)));
     };
-
+    const onColumnsChange = (c: readonly Column<R, SR>[]) => {
+        setColumns(c);
+    };
     const rowKeyGetter = (r: any) => r[rowKey || 'id'] as K;
     const onFilterChange = (key: string, value: FilterItemValue | undefined) => {
         if (value) {
@@ -174,7 +176,13 @@ function NTAGrid<R, SR = unknown, K extends string | number = number>(props: IPr
             )}
 
             <DndProvider backend={HTML5Backend}>
-                <ColumnsSetting columns={_columns} onColumnsDisplayChange={onColumnsDisplayChange} columnsKeyConfig={columnsKeyConfig} />
+                <ColumnsSetting
+                    onColumnsChange={onColumnsChange}
+                    originColumns={_columns}
+                    columns={columns}
+                    onColumnsDisplayChange={onColumnsDisplayChange}
+                    columnsKeyConfig={columnsKeyConfig}
+                />
                 <DataGrid<R, SR, K> rowKeyGetter={rowKeyGetter} rows={data} className="rdg-light" columns={draggableColumns} {...otherProps} />
                 {pagination && (
                     <div className="data-grid-pagination">
