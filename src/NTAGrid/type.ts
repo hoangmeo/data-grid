@@ -9,6 +9,7 @@ export enum FilterCondition {
     EndWith = 'EndWith',
     Contains = 'Contains',
     Equal = 'Equal',
+    NotEqual = 'NotEqual',
 }
 export interface HeaderFilterElm<T = any> {
     type: HeaderFilterType;

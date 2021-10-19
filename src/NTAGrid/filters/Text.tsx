@@ -7,7 +7,6 @@ interface Props {
 }
 const defaultValue = { type: HeaderFilterType.TEXT, condition: FilterCondition.Contains };
 export default function TextFilter({ filterValue = defaultValue, onChange }: Props): ReactElement {
-    console.log(filterValue);
     return (
         <div>
             <select
@@ -17,9 +16,10 @@ export default function TextFilter({ filterValue = defaultValue, onChange }: Pro
                 }}
             >
                 <option value={FilterCondition.Contains}>Contains</option>
-                <option value={FilterCondition.StartsWith}>StartsWith</option>
-                <option value={FilterCondition.EndWith}>EndWith</option>
+                <option value={FilterCondition.StartsWith}>Starts With</option>
+                <option value={FilterCondition.EndWith}>End With</option>
                 <option value={FilterCondition.Equal}>Equal</option>
+                <option value={FilterCondition.NotEqual}>Not Equal</option>
             </select>
             <input
                 autoFocus

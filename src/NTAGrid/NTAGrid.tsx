@@ -102,8 +102,11 @@ function NTAGrid<R, SR = unknown, K extends string | number = number>(props: IPr
                             return colValue?.endsWith(fdata.value);
                         } else if (fdata.condition === FilterCondition.Equal) {
                             return colValue === fdata.value;
+                        } else if (fdata.condition === FilterCondition.NotEqual) {
+                            return colValue !== fdata.value;
                         }
                     }
+                    // datetime
                     if (fdata.type === HeaderFilterType.DATETIME) {
                         let isValid = true;
                         const colValue: string = fconfig.toValue ? fconfig.toValue(row) : row[k];
@@ -119,6 +122,7 @@ function NTAGrid<R, SR = unknown, K extends string | number = number>(props: IPr
                         }
                         return false;
                     }
+                    // number
                     if (fdata.type === HeaderFilterType.NUMBER) {
                         let isValid = true;
                         const colValue: string = fconfig.toValue ? fconfig.toValue(row) : row[k];
@@ -134,11 +138,12 @@ function NTAGrid<R, SR = unknown, K extends string | number = number>(props: IPr
                         }
                         return false;
                     }
+                    // list
                     if (fdata.type === HeaderFilterType.LIST) {
                         const colValue: string = fconfig.toValue ? fconfig.toValue(row) : row[k];
-                        return colValue == fdata.value;
+                        return colValue === fdata.value;
                     }
-
+                    // default
                     return true;
                 });
             });
