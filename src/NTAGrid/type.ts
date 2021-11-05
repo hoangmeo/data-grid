@@ -1,3 +1,5 @@
+import { Column } from 'react-data-grid';
+
 export enum HeaderFilterType {
     TEXT = 'TEXT',
     NUMBER = 'NUMBER',
@@ -26,4 +28,9 @@ export interface FilterItemValue {
     from?: any;
     to?: any;
     condition?: FilterCondition;
+}
+
+export type NTAColumnType = 'DATE' | 'CURRENCY' | 'DATE' | 'DATETIME' | 'TEXT' | 'LONGTEXT' | 'HTML';
+export interface NTAColumn<R, SR> extends Column<R, SR> {
+    type?: NTAColumnType;
 }

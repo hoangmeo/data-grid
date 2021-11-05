@@ -31,6 +31,9 @@ export default function DemoTable(): ReactElement {
             loading={loading}
             columns={columns}
             rows={fakeData}
+            onRowClick={(r) => {
+                setSelectedRows(new Set([r.id]));
+            }}
             selectedRows={selectedRows}
             sortColumns={sortColumns}
             pagination={{

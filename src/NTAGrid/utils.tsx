@@ -1,5 +1,8 @@
 //
 
+import { Tooltip } from '@material-ui/core';
+import { NTAColumnType } from './type';
+
 export const COLUMNS_CONFIG_KEY = 'NTA_COLUMNS_CONFIG_KEY';
 
 export const clearColConfig = (_path: string, key?: string) => {
@@ -61,5 +64,38 @@ export const getOrderColConfig = (_path: string, keys: string[], key?: string) =
         return [];
     } catch (error) {
         return [];
+    }
+};
+
+export const ntaFormater = (value: any, type?: NTAColumnType): string | undefined | null | JSX.Element => {
+    switch (type) {
+        case 'CURRENCY':
+            return value;
+        case 'DATE':
+            // return date format
+            return value;
+        case 'DATETIME':
+            // return date format
+            return value;
+        case 'HTML':
+            return (
+                <Tooltip title={value}>
+                    <span>{value}</span>
+                </Tooltip>
+            );
+        case 'LONGTEXT':
+            return (
+                <Tooltip title={value}>
+                    <span>{value}</span>
+                </Tooltip>
+            );
+        case 'TEXT':
+            return value;
+        default:
+            return (
+                <Tooltip title={value}>
+                    <span>{value}</span>
+                </Tooltip>
+            );
     }
 };

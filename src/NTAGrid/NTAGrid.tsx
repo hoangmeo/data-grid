@@ -7,15 +7,18 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import './style.scss';
 import ColumnsSetting from './ColumnsSetting';
 import { Box, CircularProgress } from '@material-ui/core';
-import { HeaderFilter, FilterItemValue, HeaderFilterType, HeaderFilterElm, FilterCondition } from './type';
+import { HeaderFilter, FilterItemValue, HeaderFilterType, HeaderFilterElm, FilterCondition, NTAColumn } from './type';
 import moment from 'moment';
+import { ntaFormater } from './utils';
 export interface INTAGridRef {
     reload: () => void;
 }
 const hasValue = (v: any) => {
     return v !== '' && v !== undefined && v !== null;
 };
+
 export interface IProps<R, SR, K extends string | number> extends DataGridProps<R, SR, K> {
+    columns: readonly NTAColumn<R, SR>[];
     rowKey?: string;
     pagination?: {
         rowCount: number;
@@ -34,7 +37,7 @@ function NTAGrid<R, SR = unknown, K extends string | number = number>(props: IPr
     const [headerFilterData, setHeaderFilterData] = React.useState<{ [key: string]: FilterItemValue }>({});
     // state
 
-    const [columns, setColumns] = useState<readonly Column<R, SR>[]>(_columns);
+    const [columns, setColumns] = useState<readonly NTAColumn<R, SR>[]>(_columns);
 
     // meno
 
@@ -74,8 +77,15 @@ function NTAGrid<R, SR = unknown, K extends string | number = number>(props: IPr
             if (!c.name) {
                 return c;
             }
-            if (c.key === rowKey) return { ...c, headerRenderer: NoDraggableHeaderRenderer };
-            return { ...c, headerRenderer: HeaderRenderer };
+            let formatter: any = c.formatter;
+            if (!formatter) {
+                formatter = function (f: any) {
+                    const v = f.row ? f.row[c.key] : '';
+                    return ntaFormater(v, c.type);
+                };
+            }
+            if (c.key === rowKey) return { ...c, headerRenderer: NoDraggableHeaderRenderer, formatter: formatter };
+            return { ...c, headerRenderer: HeaderRenderer, formatter: formatter };
         });
     }, [columns, rowKey, headerFilter, headerFilterData]);
 
