@@ -1,6 +1,7 @@
 import { Column, SelectColumn } from 'react-data-grid';
 import faker from 'faker';
 import moment from 'moment';
+import { NTAColumn } from './NTAGrid/type';
 export interface CompanyType {
     id: number;
     title: string;
@@ -18,7 +19,7 @@ export interface CompanyType {
     version: string;
     available: boolean;
 }
-export const columns: Column<CompanyType>[] = [
+export const columns: NTAColumn<CompanyType>[] = [
     SelectColumn,
     {
         key: 'id',
@@ -63,6 +64,7 @@ export const columns: Column<CompanyType>[] = [
         key: 'contact',
         name: 'Contact',
         width: 160,
+        type: 'HTML',
     },
     {
         key: 'assignee',

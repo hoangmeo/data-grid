@@ -2,7 +2,7 @@
 
 import { Tooltip } from '@material-ui/core';
 import { NTAColumnType } from './type';
-
+import { showMessage } from '../NTAMessage';
 export const COLUMNS_CONFIG_KEY = 'NTA_COLUMNS_CONFIG_KEY';
 
 export const clearColConfig = (_path: string, key?: string) => {
@@ -78,11 +78,7 @@ export const ntaFormater = (value: any, type?: NTAColumnType): string | undefine
             // return date format
             return value;
         case 'HTML':
-            return (
-                <Tooltip title={value}>
-                    <span>{value}</span>
-                </Tooltip>
-            );
+            return <div onClick={() => showMessage('content', value)}>......</div>;
         case 'LONGTEXT':
             return (
                 <Tooltip title={value}>

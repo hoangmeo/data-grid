@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-
+import { NTAMessageWrapper } from './NTAMessage';
 ReactDOM.render(
     <React.StrictMode>
         <Router>
@@ -10,6 +10,7 @@ ReactDOM.render(
                 <Route path="/" component={App} exact={true} />
             </Switch>
         </Router>
+        <NTAMessageWrapper />
     </React.StrictMode>,
     document.getElementById('root'),
 );

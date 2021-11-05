@@ -31,6 +31,6 @@ export interface FilterItemValue {
 }
 
 export type NTAColumnType = 'DATE' | 'CURRENCY' | 'DATE' | 'DATETIME' | 'TEXT' | 'LONGTEXT' | 'HTML';
-export interface NTAColumn<R, SR> extends Column<R, SR> {
+export interface NTAColumn<R, SR = unknown> extends Column<R, SR> {
     type?: NTAColumnType;
 }
